@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # The Mirror Bot (Handles the downloads)
+  mirror-bot:
+    image: bot-image-name  # Replace this with your actual bot image name
+    container_name: movie-master
+    volumes:
+      - ./bot:/usr/src/app/config
+      - ~/media_drive:/usr/src/app/downloads
+    restart: always
+
+  # Jellyfin (The streaming server)
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: host
+    volumes:
+      - ./jellyfin_config:/config
+      - ./jellyfin_cache:/cache
+      - ~/media_drive:/data/movies
+    restart: always
+
